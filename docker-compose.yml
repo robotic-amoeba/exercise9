@@ -1,5 +1,92 @@
 version: "3"
 services:
+
+  message:
+    environment:
+      - SERVICE_NAME=service-v1
+    hostname: service-v1
+    build: message/
+    deploy:
+      replicas: 5
+    ports:
+      - "8081"
+    depends_on:
+      - messageapp
+      - mongodb_message
+      - replica_message
+      - redis
+      - credit
+    
+  message2:
+    environment:
+      - SERVICE_NAME=service-v2
+    hostname: service-v2
+    build: message2/
+    deploy:
+      replicas: 1
+    ports:
+      - "8082"
+    depends_on:
+      - messageapp
+      - mongodb_message
+      - replica_message
+      - redis
+      - credit
+
+  credit:
+    build: credit/
+    ports:
+      - "9006:9006"
+    links:
+      - mongodb_credit
+      - replica_credit
+      - redis
+    depends_on:
+      - mongodb_credit
+      - replica_credit
+      - redis
+
+  messageapp:
+    image: cabify/backend-bootcamp-messageapp
+    ports:
+      - "3000:3000"
+
+  mongodb_credit:
+    image: mongo
+    command: mongod --port 27018    
+    volumes:
+      - ./credit/data/db:/credit/data/db
+    ports:
+      - 27018:27018
+  replica_credit:
+    image: mongo
+    command: mongod --port 27019    
+    volumes:
+      - ./credit/data/replica:/credit/data/replica
+    ports:
+      - 27019:27019
+
+  mongodb_message:
+    image: mongo
+    command: mongod --port 27027
+    volumes:
+      - ./message/data/db:/message/data/db
+    ports:
+      - 27027:27027
+
+  replica_message:
+    image: mongo
+    command: mongod --port 27028
+    volumes:
+      - ./message/data/replica:/message/data/replica
+    ports:
+      - 27028:27028
+
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+
   registrator:
     image: gliderlabs/registrator
     volumes:
