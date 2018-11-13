@@ -3,7 +3,6 @@ const debug = require("debug")("debug:sendMessage");
 const axios = require("axios");
 const messageAPP = axios.create({
   baseURL: "http://messageapp:3000",
-  //baseURL: "http://localhost:3000",
   timeout: 3000
 });
 const rollBackPolicy = require("../controllers/rollbackQueue");

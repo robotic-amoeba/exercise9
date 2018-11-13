@@ -1,7 +1,6 @@
 const uuidv1 = require("uuid/v1");
 const Queue = require("bull");
 const debug = require("debug")("debug:requestQueue");
-//const requestsQueue = new Queue("MessageRequests", "redis://127.0.0.1:6379");
 const requestsQueue = new Queue("MessageRequests", "redis://redis:6379");
 const saveMessage = require("../clients/saveMessage");
 

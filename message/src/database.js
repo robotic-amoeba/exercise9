@@ -4,8 +4,6 @@ const debug = require("debug")("debug:database");
 const servers = {
   primary: "mongodb_message:27027",
   replica: "replica_message:27028"
-  //primary: "127.0.0.1:27018",
-  //replica: "127.0.0.1:27019"
 };
 const database = "cabify_bootcamp";
 

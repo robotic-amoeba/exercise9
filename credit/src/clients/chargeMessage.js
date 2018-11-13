@@ -41,7 +41,6 @@ module.exports = function(message) {
       });
     } else {
       debug("Found not enough credit in the if statement: ", credit);
-      //THROW EVENT TO WARN MESSAGE: NOT ENOUGH CREDIT
       message.status = "NO CREDIT";
       addToProcessedQueue(message);
     }
