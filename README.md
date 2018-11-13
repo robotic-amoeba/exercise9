@@ -10,6 +10,9 @@ En este ejercicio practicaremos estrategias de despliegue a producción y nos pr
 Proveemos de una topología con un balanceador de carga (puerto 48151), conectado a un Service Discovery (Consul). Gracias al Service Discovery, añadir o quitar réplicas registrará automáticamente los cambios en el balanceador de carga, permitiendo mucha mayor elasticidad y reacción a cambios.
 Puedes utilizar docker service para controlar el número de réplicas.
 
+Como observación importante, en la configuración de haproxy de la que se os provee, se configuran servicios con nombres `service-v1` y `service-v2`; por consistencia con esta particularidad de la configuración, tenéis que definir variables de entorno al lanzar los contenedores de vuestros servicios: `SERVICE_NAME`, con valor `service-v1` para el conjunto de ré
+plicas estables y `service-v2` en los canarios.
+
 ### 3. Cómo realizar un despliegue
 
 Supongamos que tenemos una arquitectura similar a la que se desarrollo hasta el ejercicio 8 (e incluida en el ejemplo). Un backend distribuido en varios microservicios, cada uno de los cuales se ejecuta redundantemente para reducir [SPOFs](https://en.wikipedia.org/wiki/Single_point_of_failure).
